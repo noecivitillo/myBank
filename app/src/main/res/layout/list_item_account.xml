@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardCornerRadius="2dp"
+        android:clipToPadding="false"
+        android:padding="8dp"
+        android:layout_margin="8dp"
+        style="?android:attr/buttonBarStyle">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_account_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoSizeTextType="uniform"
+                android:background="@null"
+                android:padding="5dp"
+                android:textSize="18sp"
+                tools:ignore="unusedAttribute"
+                tools:text="Caja de Ahorro"
+                android:fontFamily="@font/alfa_slab_one"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="@+id/text_account_number"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_account_number"
+                android:layout_width="134dp"
+                android:layout_height="24dp"
+                android:autoSizeTextType="uniform"
+                android:background="@null"
+                android:padding="5dp"
+                android:textSize="14sp"
+                tools:ignore="unusedAttribute"
+                tools:text="247-637647464"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_account_type" android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp" android:layout_marginStart="24dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="24dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_account_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoSizeTextType="uniform"
+                android:background="@null"
+                android:padding="5dp"
+                android:textSize="16sp"
+                tools:ignore="unusedAttribute"
+                tools:text="U$"
+                android:textStyle="bold" android:layout_marginTop="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/text_account_amount"
+                android:fontFamily="sans-serif"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_account_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoSizeTextType="uniform"
+                android:background="@null"
+                android:padding="5dp"
+                android:textSize="16sp"
+                tools:ignore="unusedAttribute"
+                tools:text="1500"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="@+id/text_account_currency"
+                app:layout_constraintBottom_toBottomOf="@+id/text_account_currency"
+                app:layout_constraintVertical_bias="0.0" android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="16dp"
+                android:fontFamily="sans-serif"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

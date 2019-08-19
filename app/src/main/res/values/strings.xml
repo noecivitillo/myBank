@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">myBank</string>
+
+    <string name="weather_endpoint">https://api.darksky.net/forecast/2b9f33d7ae8cfdde58b51a4c6625c382/</string>
+
+    <string name="menu_transfers">Transferencias</string>
+    <string name="menu_weather">Estado del clima</string>
+
+    <string name="login_user">Usuario</string>
+    <string name="login_pass">Contraseña</string>
+    <string name="login_btn">Ingresar</string>
+    <string name="login_toast_successful">Bienvenido %1$s</string>
+    <string name="login_toast_error">Contraseña incorrecta, intenta nuevamente</string>
+
+    <string name="transfers_account">Seleccionar cuenta</string>
+    <string name="transfers_amount">Importe</string>
+    <string name="transfers_btn_generate_qr">Generar codigo QR</string>
+    <string name="transfers_account_dest">Seleccionar cuenta destino</string>
+    <string name="transfers_btn_scan_qr">Agregar cuenta destino QR</string>
+
+    <string name="logout_alert_title">Aviso</string>
+    <string name="logout_alert_message">¿Estas seguro?
+        La sesión se cerrará
+    </string>
+
+    <string name="alert_yes">Si</string>
+    <string name="alert_cancel">Cancelar</string>
+
+    <string name="spinner_dest_account">No tienes cuentas agendadas</string>
+
+    <string name="weather_temperature">%1$sº</string>
+    <string name="weather_precip">Lluvias %</string>
+    <string name="weather_humidity">Humidity %</string>
+    <string name="weather_toast_error">Ocurrio un error, intenta nuevamente mas tarde</string>
+
+</resources>
