@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -18,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_transfers.*
 import todo1.test.bank.R
+import todo1.test.bank.model.Account
 import todo1.test.bank.model.User
 import todo1.test.bank.ui.activity.vm.TransfersViewModel
 import todo1.test.bank.util.doAfterTextChanged
@@ -29,6 +31,7 @@ class TransfersActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: TransfersViewModel
+    var listAccounts: List<Account> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -45,9 +48,14 @@ class TransfersActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
         editText_amount.doAfterTextChanged { text -> viewModel.amountToTransfer = text }
 
         //Observe accounts and fill spinner
-        viewModel.spinnerAccounts.observe(this, Observer {
-            val adapterSpinner = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, it)
+        viewModel.accounts.observe(this, Observer {
+            //create list to show in spinner
+            val listOfAccounts = it.map { account -> "${account.type} , ${account.number} , ${account.currency}" }
+            //fill spinner
+            val adapterSpinner = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, listOfAccounts)
             spinner_accounts.adapter = adapterSpinner
+            //Store accounts in list(only to handle selected items)
+            listAccounts = it
         })
 
         //Init spinner of destination accounts with no data
@@ -55,9 +63,15 @@ class TransfersActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
 
         //Handle click to generate qr code
         btn_generate_qr.setOnClickListener {
-            val drawable = BitmapDrawable(resources, viewModel.generateQRBitmap())
-            image_qr.visibility = View.VISIBLE
-            image_qr.setImageDrawable(drawable)
+            if (viewModel.isValidAmountToTransfer()) {
+                val drawable = BitmapDrawable(resources, viewModel.generateQRBitmap())
+                image_qr.visibility = View.VISIBLE
+                image_qr.setImageDrawable(drawable)
+            } else {
+                image_qr.visibility = View.GONE
+                Toast.makeText(this, resources.getString(R.string.transfers_incorrect_amount), Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
 
         //Handle click to scan qr code - check manifest permission first
@@ -71,7 +85,9 @@ class TransfersActivity : AppCompatActivity(), AdapterView.OnItemSelectedListene
     }
 
     override fun onItemSelected(p0: AdapterView<*>, p1: View?, p2: Int, p3: Long) {
-        viewModel.accountSelected = p0.getItemAtPosition(p2).toString()
+        //Get position of selected account
+        val account = listAccounts[p2]
+        viewModel.setAccountSelected(account)
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {}

@@ -17,6 +17,7 @@
     <string name="transfers_btn_generate_qr">Generar codigo QR</string>
     <string name="transfers_account_dest">Seleccionar cuenta destino</string>
     <string name="transfers_btn_scan_qr">Agregar cuenta destino QR</string>
+    <string name="transfers_incorrect_amount">No tienes suficiente saldo, intenta nuevamente</string>
 
     <string name="logout_alert_title">Aviso</string>
     <string name="logout_alert_message">¿Estas seguro?

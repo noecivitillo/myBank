@@ -2,6 +2,7 @@ package todo1.test.bank.ui.activity.vm
 
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -17,19 +18,30 @@ import javax.inject.Inject
 class TransfersViewModel @Inject constructor(repository: UserRepository) : ViewModel() {
 
     var amountToTransfer = ""
-    var accountSelected = ""
-
+    private val accountSelected = MutableLiveData<Account>()
     private val userId = MutableLiveData<Long>()
-    private val accounts: LiveData<List<Account>> = Transformations.switchMap(userId) {
+    val accounts: LiveData<List<Account>> = Transformations.switchMap(userId) {
         repository.getUserAccountsById(it)
-    }
-
-    val spinnerAccounts: LiveData<List<String>> = Transformations.map(accounts) {
-        it.map { account -> "${account.type} , ${account.number} , ${account.currency}" }
     }
 
     fun setUserId(value: Long) {
         userId.postValue(value)
+    }
+
+    fun setAccountSelected(value: Account) {
+        accountSelected.postValue(value)
+    }
+
+    fun isValidAmountToTransfer(): Boolean {
+        val amount = accountSelected.value?.balance?.toInt()
+        amount?.let {
+            return when {
+                amountToTransfer.isEmpty() -> false
+                amount >= amountToTransfer.toInt() && amountToTransfer.isNotEmpty() -> true
+                else -> false
+            }
+        }
+        return false
     }
 
     fun generateQRBitmap(): Bitmap? {
@@ -50,6 +62,7 @@ class TransfersViewModel @Inject constructor(repository: UserRepository) : ViewM
 
             }
         } catch (e: WriterException) {
+            Log.i("WriterException", "Exception QRCodeWriter")
             e.printStackTrace()
         }
 
